@@ -29,11 +29,27 @@ def transform():
     df['product_height_cm'].fillna(df['product_height_cm'].median(), inplace=True)
     df['product_width_cm'].fillna(df['product_width_cm'].median(), inplace=True)
 
-    # drop rows with no price - shouldnt be many
     df.dropna(subset=['price'], inplace=True)
 
+    # fix date columns - they come in as strings
+    date_cols = [
+        'order_purchase_timestamp',
+        'order_approved_at',
+        'order_delivered_carrier_date',
+        'order_delivered_customer_date',
+        'order_estimated_delivery_date'
+    ]
+    for col in date_cols:
+        df[col] = pd.to_datetime(df[col])
+
+    # feature engineering
+    df['delivery_days'] = (df['order_delivered_customer_date'] - df['order_purchase_timestamp']).dt.days
+    df['order_total'] = df['price'] + df['freight_value']
+    df['purchase_month'] = df['order_purchase_timestamp'].dt.to_period('M')
+    df['purchase_dow'] = df['order_purchase_timestamp'].dt.day_name()
+
     print("after null handling:", df.shape)
-    print("remaining nulls:\n", df.isnull().sum()[df.isnull().sum() > 0])
+    print("delivery_days sample:\n", df['delivery_days'].describe())
 
     return df
 
