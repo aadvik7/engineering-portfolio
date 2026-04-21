@@ -21,7 +21,19 @@ def transform():
     df = df.merge(sellers, on='seller_id', how='left')
 
     print("merged shape:", df.shape)
-    print(df.columns.tolist())
+
+    # handle nulls
+    df['product_category_name_english'].fillna('unknown', inplace=True)
+    df['product_weight_g'].fillna(df['product_weight_g'].median(), inplace=True)
+    df['product_length_cm'].fillna(df['product_length_cm'].median(), inplace=True)
+    df['product_height_cm'].fillna(df['product_height_cm'].median(), inplace=True)
+    df['product_width_cm'].fillna(df['product_width_cm'].median(), inplace=True)
+
+    # drop rows with no price - shouldnt be many
+    df.dropna(subset=['price'], inplace=True)
+
+    print("after null handling:", df.shape)
+    print("remaining nulls:\n", df.isnull().sum()[df.isnull().sum() > 0])
 
     return df
 
