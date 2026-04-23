@@ -1,5 +1,6 @@
 -- analytical queries for olist ecommerce data
--- running these against orders_enriched table
+-- running these against orders_enriched table in postgres
+-- table is built by running src/transform.py then src/load.py
 
 
 -- 1. monthly revenue trend
