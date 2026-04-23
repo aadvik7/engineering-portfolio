@@ -60,3 +60,32 @@ WHERE order_status = 'delivered'
 GROUP BY 1, 2
 ORDER BY 3 DESC
 LIMIT 10;
+
+
+-- 6. one-time vs repeat customers
+SELECT
+    CASE
+        WHEN order_count = 1 THEN 'one-time'
+        ELSE 'repeat'
+    END AS customer_type,
+    COUNT(*) AS num_customers
+FROM (
+    SELECT
+        customer_unique_id,
+        COUNT(DISTINCT order_id) AS order_count
+    FROM orders_enriched
+    WHERE order_status = 'delivered'
+    GROUP BY 1
+) sub
+GROUP BY 1;
+
+
+-- 7. revenue lost to late deliveries
+-- late = delivered after estimated date
+SELECT
+    ROUND(SUM(o.order_total)::numeric, 2) AS late_revenue,
+    COUNT(DISTINCT o.order_id) AS late_orders
+FROM orders_enriched o
+JOIN orders_enriched late
+    ON o.customer_id = late.customer_id
+WHERE o.order_delivered_customer_date > o.order_estimated_delivery_date;
