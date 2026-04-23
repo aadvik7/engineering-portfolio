@@ -36,3 +36,27 @@ WHERE order_status = 'delivered'
     AND delivery_days IS NOT NULL
 GROUP BY 1
 ORDER BY 2 DESC;
+
+
+-- 4. order volume by day of week
+SELECT
+    purchase_dow AS day_of_week,
+    COUNT(DISTINCT order_id) AS num_orders,
+    ROUND(SUM(order_total)::numeric, 2) AS total_revenue
+FROM orders_enriched
+WHERE order_status = 'delivered'
+GROUP BY 1
+ORDER BY 2 DESC;
+
+
+-- 5. top sellers by revenue
+SELECT
+    seller_id,
+    seller_state,
+    ROUND(SUM(order_total)::numeric, 2) AS total_revenue,
+    COUNT(DISTINCT order_id) AS num_orders
+FROM orders_enriched
+WHERE order_status = 'delivered'
+GROUP BY 1, 2
+ORDER BY 3 DESC
+LIMIT 10;
