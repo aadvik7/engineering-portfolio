@@ -84,9 +84,8 @@ GROUP BY 1;
 -- 7. revenue lost to late deliveries
 -- late = delivered after estimated date
 SELECT
-    ROUND(SUM(o.order_total)::numeric, 2) AS late_revenue,
-    COUNT(DISTINCT o.order_id) AS late_orders
-FROM orders_enriched o
-JOIN orders_enriched late
-    ON o.customer_id = late.customer_id
-WHERE o.order_delivered_customer_date > o.order_estimated_delivery_date;
+    ROUND(SUM(order_total)::numeric, 2) AS late_revenue,
+    COUNT(DISTINCT order_id) AS late_orders
+FROM orders_enriched
+WHERE order_delivered_customer_date > order_estimated_delivery_date
+    AND order_status = 'delivered';
