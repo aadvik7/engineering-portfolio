@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 import os
 
 DB_URL = "postgresql+psycopg2://postgres:password@localhost:5432/olist"
-OUTPUT_DIR = "output/charts/"
+OUTPUT_DIR = "output/charts/"  # charts saved here, gitignored
 
 def get_engine():
     return create_engine(DB_URL)
