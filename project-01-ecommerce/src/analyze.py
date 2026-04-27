@@ -7,9 +7,11 @@ DB_URL = "postgresql+psycopg2://postgres:password@localhost:5432/olist"
 OUTPUT_DIR = "output/charts/"  # charts saved here, gitignored
 
 def get_engine():
+    """Create SQLAlchemy engine using DB_URL."""
     return create_engine(DB_URL)
 
 def run_query(engine, sql):
+    """Run a SQL query and return results as a DataFrame."""
     return pd.read_sql(sql, engine)
 
 def main():
