@@ -1,3 +1,10 @@
+import os
 from sqlalchemy import create_engine
+from dotenv import load_dotenv
 
-# insert weather records into postgres
+load_dotenv()
+
+DB_URL = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+
+def get_engine():
+    return create_engine(DB_URL)
