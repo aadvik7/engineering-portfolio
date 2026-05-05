@@ -14,7 +14,20 @@ def insert_records(records):
     """Insert a list of weather record dicts into postgres."""
     engine = get_engine()
     df = pd.DataFrame(records)
-    # TODO: add dedup logic
+
+    # skip cities already recorded in the last hour
+    with engine.connect() as conn:
+        existing = pd.read_sql(
+            "SELECT city FROM weather_readings WHERE fetched_at > NOW() - INTERVAL '1 hour'",
+            conn
+        )
+    already_done = existing['city'].tolist()
+    df = df[~df['city'].isin(already_done)]
+
+    if df.empty:
+        print("nothing new to insert")
+        return
+
     df.to_sql('weather_readings', engine, if_exists='append', index=False)
     print(f"inserted {len(df)} records")
 
