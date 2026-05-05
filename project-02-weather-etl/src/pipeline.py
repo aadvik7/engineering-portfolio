@@ -1,11 +1,13 @@
 import sys
 import os
+import schedule
+import time
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from src.extract import fetch_weather
 from src.transform import transform_all
 from src.load import insert_records
-from config import CITIES
+from config import CITIES, FETCH_INTERVAL
 
 
 def run_pipeline():
@@ -21,7 +23,15 @@ def run_pipeline():
     print(f"transformed {len(records)} records")
 
     insert_records(records)
+    print("pipeline done")
 
 
 if __name__ == "__main__":
-    run_pipeline()
+    run_pipeline()  # run once on start
+
+    schedule.every(FETCH_INTERVAL).minutes.do(run_pipeline)
+    print(f"scheduler running, fetching every {FETCH_INTERVAL} mins")
+
+    while True:
+        schedule.run_pending()
+        time.sleep(30)
