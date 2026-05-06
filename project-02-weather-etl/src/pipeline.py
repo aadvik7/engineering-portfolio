@@ -1,3 +1,5 @@
+import schedule
+import time
 from extract import fetch_weather
 from transform import transform_all
 from load import insert_records
@@ -12,4 +14,9 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    print("starting weather pipeline, runs every 60 min")
+    schedule.every(60).minutes.do(run)
+    run()  # run once immediately on start
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
