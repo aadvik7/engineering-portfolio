@@ -9,6 +9,9 @@ def run():
     print("fetching weather data...")
     results = [(city, fetch_weather(city)) for city in CITIES]
     records = transform_all(results)
+    print(f"got {len(records)} records")
+    for r in records:
+        print(f"  {r['city']}: {r['temp']}°C, {r['weather_desc']}")
     insert_records(records)
     print("done")
 
