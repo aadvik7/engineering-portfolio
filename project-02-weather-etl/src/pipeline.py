@@ -7,7 +7,18 @@ from config import CITIES
 
 def run():
     print("fetching weather data...")
-    results = [(city, fetch_weather(city)) for city in CITIES]
+    results = []
+    for city in CITIES:
+        data = fetch_weather(city)
+        if data:
+            results.append((city, data))
+        else:
+            print(f"skipping {city}, no data")
+
+    if not results:
+        print("no data fetched, exiting")
+        return
+
     records = transform_all(results)
     print(f"got {len(records)} records")
     for r in records:

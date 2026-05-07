@@ -8,8 +8,13 @@ API_KEY = os.getenv('OWM_API_KEY')
 
 def fetch_weather(city):
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
-    response = requests.get(url)
-    return response.json()
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"error fetching {city}: {e}")
+        return None
 
 
 if __name__ == "__main__":
