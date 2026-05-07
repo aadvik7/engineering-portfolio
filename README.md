@@ -10,13 +10,9 @@ Projects built while learning the modern data engineering stack — from basic E
 
 | # | Project | Stack | Status |
 |---|---|---|---|
-| 01 | [Ecommerce Sales Analyzer](project-01-ecommerce/) | Python, Pandas, PostgreSQL, Matplotlib | ✅ Done |
-| 02 | [Weather ETL Pipeline](project-02-weather-etl/) | Python, Requests, PostgreSQL, Schedule | ✅ Done |
-| 03 | Airflow News Pipeline | Python, Airflow, PostgreSQL, Docker | 🔧 In Progress |
-| 04 | Cricket Data Warehouse | Python, BigQuery, GCS, Pandas | ⏳ Upcoming |
-| 05 | PySpark Log Analyzer | PySpark, Databricks | ⏳ Upcoming |
-| 06 | dbt Retail Data Mart | dbt Core, PostgreSQL | ⏳ Upcoming |
-| 07 | Real Estate Data Platform | Airflow, PySpark, dbt, BigQuery, Looker Studio | ⏳ Upcoming |
+| 01 | [Ecommerce Sales Analyzer](project-01-ecommerce/) | Python, Pandas, PostgreSQL, Matplotlib |  Done |
+| 02 | [Weather ETL Pipeline](project-02-weather-etl/) | Python, Requests, PostgreSQL, Schedule |  Done |
+
 
 ---
 
@@ -30,4 +26,4 @@ Scheduled pipeline that hits the OpenWeatherMap API every hour for 5 Indian citi
 
 ---
 
-*Target role: Data Engineer Intern*
+*Target role: Data Engineer*
