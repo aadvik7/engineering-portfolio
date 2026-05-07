@@ -1,5 +1,6 @@
 import requests
 import os
+import logging
 from dotenv import load_dotenv
 from config import CITIES
 
@@ -13,11 +14,11 @@ def fetch_weather(city):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"error fetching {city}: {e}")
+        logging.error(f"error fetching {city}: {e}")
         return None
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
     for city in CITIES:
-        print(f"\n--- {city} ---")
         print(fetch_weather(city))
