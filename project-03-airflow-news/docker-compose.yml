@@ -43,6 +43,7 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./src:/opt/airflow/src
+    restart: on-failure
     command: webserver
 
   scheduler:
@@ -55,6 +56,7 @@ services:
     volumes:
       - ./dags:/opt/airflow/dags
       - ./src:/opt/airflow/src
+    restart: on-failure
     command: scheduler
 
 volumes:
