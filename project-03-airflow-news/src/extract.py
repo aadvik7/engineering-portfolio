@@ -28,4 +28,10 @@ def fetch_news(query="technology", language="en"):
 if __name__ == "__main__":
     articles = fetch_news()
     if articles:
-        print(articles[0].get('title'))
+        print("\nsample article:")
+        a = articles[0]
+        print("title:", a.get('title'))
+        print("source:", a.get('source', {}).get('name'))
+        print("published:", a.get('publishedAt'))
+        print("description:", a.get('description'))
+        print("url:", a.get('url'))
